@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="120dp"
+    android:layout_height="120dp">
+    <ImageView
+        android:id="@+id/iv_student"
+        android:src="@drawable/ic_account_balance_white_24px"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_gravity="center_vertical|bottom"
+        android:orientation="vertical"
+        android:background="#01010000"
+        android:layout_height="wrap_content">
+    <TextView
+        android:id="@+id/tv_name"
+        android:textColor="@color/textColor"
+        android:text="Nguyen Van A"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/tv_id"
+        android:textColor="@color/textColor"
+        android:text="1551060890"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:gravity="center"
+        android:textColor="@color/textColor"
+        android:id="@+id/tv_class"
+        android:text="57TH1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    </LinearLayout>
+</FrameLayout>

@@ -1,27 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     android:orientation="vertical"
-    tools:context="com.example.haohoang.camera.MainActivity">
-    <Button
-        android:id="@+id/bt_camera"
-        android:layout_width="wrap_content"
-        android:text="Click me"
-        android:layout_height="wrap_content" />
-    <ImageView
-        android:id="@+id/iv_camera"
-        android:layout_width="200dp"
-        android:layout_height="200dp" />
-    <Button
-        android:id="@+id/bt_summit"
-        android:text="Ok"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.example.haohoang.camera.activities.MainActivity">
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tl_action"
+            android:layout_marginBottom="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <android.support.design.widget.TabItem
+                android:text="Cac lop giang day"
+                app:srcCompat="@drawable/ic_account_balance_white_24px"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <android.support.design.widget.TabItem
+                android:text="thoi khoa bieu tuan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <android.support.design.widget.TabItem
+                android:text="Tra cuu thong tin sinh vien"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </android.support.design.widget.TabLayout>
+
+    <include
+        layout="@layout/fl_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
 </LinearLayout>

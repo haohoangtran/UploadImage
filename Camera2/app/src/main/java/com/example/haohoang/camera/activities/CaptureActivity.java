@@ -1,9 +1,7 @@
-package com.example.haohoang.camera;
+package com.example.haohoang.camera.activities;
 
 import android.content.Intent;
-import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.provider.MediaStore;
@@ -16,6 +14,7 @@ import android.widget.ImageView;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
+import com.example.haohoang.camera.R;
 
 import java.io.File;
 import java.io.IOException;
@@ -24,63 +23,58 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class GarellyActivity extends AppCompatActivity {
-    private static final int RESULT_LOAD_IMAGE = 1;
-    private static final String TAG = GarellyActivity.class.toString();
-    @BindView(R.id.bt_garelly)
-    Button btGarely;
-    @BindView(R.id.bt_uploadgarelly)
-    Button btUpload;
-    @BindView(R.id.iv_garelly)
-    ImageView ivGarelly;
-    String picturePath;
+public class CaptureActivity extends AppCompatActivity {
+    private static final int CAM_REQUEST = 1;
+    private static final String TAG = CaptureActivity.class.toString();
+    @BindView(R.id.bt_camera)
+    Button buttonCamera;
+    @BindView(R.id.iv_camera)
+    ImageView imgCamera;
+    @BindView(R.id.bt_summit)
+    Button btSummit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_garelly);
+        setContentView(R.layout.activity_capture);
         ButterKnife.bind(this);
         addListener();
-    }
 
+    }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        String path ="sdcard/camera_app/cam_image.jpg";
+        Log.e(TAG, String.format("onActivityResult: %s", (new File(path)).getTotalSpace()) );
+        imgCamera.setImageDrawable(Drawable.createFromPath(path));
 
-        if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data) {
-            Uri selectedImage = data.getData();
-            String[] filePathColumn = {MediaStore.Images.Media.DATA};
-
-            Cursor cursor = getContentResolver().query(selectedImage,
-                    filePathColumn, null, null, null);
-            cursor.moveToFirst();
-
-            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-            picturePath = cursor.getString(columnIndex);
-            cursor.close();
-
-            Bitmap bmp = BitmapFactory.decodeFile(picturePath);
-            ivGarelly.setImageBitmap(bmp);
-
-        }
     }
 
     private void addListener() {
-        btGarely.setOnClickListener(new View.OnClickListener() {
+        buttonCamera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(
-                        Intent.ACTION_PICK,
-                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(i, RESULT_LOAD_IMAGE);
+                Intent intent=new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                File file=getFile();
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(file));
+                startActivityForResult(intent,CAM_REQUEST);
             }
         });
-        btUpload.setOnClickListener(new View.OnClickListener() {
+        btSummit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                GarellyActivity.Retrievedata retrievedata=new Retrievedata();
-                retrievedata.execute(picturePath);
+                Retrievedata retrievedata=new Retrievedata();
+                String path ="sdcard/camera_app/cam_image.jpg";
+                retrievedata.execute(path);
             }
         });
+    }
+    private File getFile(){
+        File foder=new File("sdcard/camera_app");
+        if (!foder.exists()){
+            foder.mkdir();
+        }
+        File file=new File(foder,"cam_image.jpg");
+        return file;
     }
     public void setBtSummit(File file)  {
         Cloudinary cloudinary=new Cloudinary(
@@ -100,7 +94,7 @@ public class GarellyActivity extends AppCompatActivity {
     class Retrievedata extends AsyncTask<String, Void, String> {
         @Override
         protected String doInBackground(String... params) {
-            setBtSummit(new File(params[0]));
+                setBtSummit(new File(params[0]));
             return null;
         }
     }
